@@ -7,19 +7,33 @@
     <cn.psvmc.wheelview.WheelView
         android:id="@+id/wheel_view_year"
         android:layout_weight="1"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
     <cn.psvmc.wheelview.WheelView
         android:id="@+id/wheel_view_month"
         android:layout_weight="1"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
     />
 
     <cn.psvmc.wheelview.WheelView
         android:id="@+id/wheel_view_day"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        />
+
+    <cn.psvmc.wheelview.WheelView
+        android:id="@+id/wheel_view_hour"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        />
+
+    <cn.psvmc.wheelview.WheelView
+        android:id="@+id/wheel_view_minute"
+        android:layout_width="wrap_content"
         android:layout_weight="1"
         android:layout_height="wrap_content"
         />

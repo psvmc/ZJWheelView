@@ -124,9 +124,9 @@ public class WheelView extends ScrollView {
                             WheelView.this.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    WheelView.this.smoothScrollTo(0, initialY - remainder + itemHeight);
                                     selectedIndex = divided + offset + 1;
                                     onSeletedCallBack();
+                                    WheelView.this.smoothScrollTo(0, initialY - remainder + itemHeight);
                                 }
                             });
                         } else {
@@ -169,9 +169,6 @@ public class WheelView extends ScrollView {
         for (WheelItem item : itemsNew) {
             views.addView(createView(item.text));
         }
-
-        selectedIndex = offset;
-        refreshTextColor();
     }
 
     int itemHeight = 0;

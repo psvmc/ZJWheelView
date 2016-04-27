@@ -76,10 +76,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (v.getId() == R.id.main_show_dialog_btn2) {
             View outerView = LayoutInflater.from(this).inflate(R.layout.wheel_view2, null);
             final WheelView yearView, monthView, dayView;
+            final WheelView hourView, minuteView;
 
             yearView = (WheelView) outerView.findViewById(R.id.wheel_view_year);
             monthView = (WheelView) outerView.findViewById(R.id.wheel_view_month);
             dayView = (WheelView) outerView.findViewById(R.id.wheel_view_day);
+            hourView = (WheelView) outerView.findViewById(R.id.wheel_view_hour);
+            minuteView = (WheelView) outerView.findViewById(R.id.wheel_view_minute);
 
             yearView.setOffset(2);
             yearView.setItemsNew(WheelItem.listFromNum(2000, 2100));
@@ -88,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onSelected(int selectedIndex, WheelItem item) {
                     jiaozhengDate(yearView, monthView, dayView);
-                    Log.d(TAG, "年: " + item.text + ", 对应的值: " + item.value);
                 }
             });
 
@@ -100,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onSelected(int selectedIndex, WheelItem item) {
                     jiaozhengDate(yearView, monthView, dayView);
-                    Log.d(TAG, "月: " + item.text + ", 对应的值: " + item.value);
                 }
             });
 
@@ -111,12 +112,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onSelected(int selectedIndex, WheelItem item) {
                     jiaozhengDate(yearView, monthView, dayView);
-                    Log.d(TAG, "日: " + item.text + ", 对应的值: " + item.value);
                 }
             });
 
+            hourView.setOffset(2);
+            hourView.setItemsNew(WheelItem.listFromNum(0, 23));
+
+            minuteView.setOffset(2);
+            minuteView.setItemsNew(WheelItem.listFromNum(0, 59));
+
             new AlertDialog.Builder(this)
-                    .setTitle("弹窗选择")
+                    .setTitle("日期选择")
                     .setView(outerView)
                     .setPositiveButton("确认", null)
                     .show();
