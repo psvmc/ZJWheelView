@@ -1,0 +1,28 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+ <cn.psvmc.wheelview.WheelView
+     android:id="@+id/main_wv"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content">
+ </cn.psvmc.wheelview.WheelView>
+
+    <Button
+        android:id="@+id/main_show_dialog_btn"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="弹窗"
+        />
+    <Button
+        android:id="@+id/main_show_dialog_btn2"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="日期弹窗"
+        />
+
+</LinearLayout>
