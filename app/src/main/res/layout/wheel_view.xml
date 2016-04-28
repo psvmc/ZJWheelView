@@ -4,14 +4,14 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
 
-    <cn.psvmc.wheelview.WheelView
+    <cn.psvmc.wheelview.ZJWheelView
         android:id="@+id/wheel_view_wv"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
     />
 
-    <cn.psvmc.wheelview.WheelView
+    <cn.psvmc.wheelview.ZJWheelView
         android:id="@+id/wheel_view_wv2"
         android:layout_width="match_parent"
         android:layout_weight="1"

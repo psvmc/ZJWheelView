@@ -6,10 +6,10 @@ import java.util.List;
 /**
  * Created by PSVMC on 16/4/27.
  */
-public class WheelItem {
+public class ZJWheelItem {
     public String value;
     public String text;
-    public WheelItem(String value,String text){
+    public ZJWheelItem(String value, String text){
         this.value = value;
         this.text = text;
     }
@@ -19,10 +19,10 @@ public class WheelItem {
      * @param arr
      * @return
      */
-    public static List<WheelItem> listFromStringArray(String[] arr){
-        List<WheelItem> list = new ArrayList<>();
+    public static List<ZJWheelItem> listFromStringArray(String[] arr){
+        List<ZJWheelItem> list = new ArrayList<>();
         for (int i = 0; i < arr.length; i++) {
-            list.add(new WheelItem(arr[i],arr[i]));
+            list.add(new ZJWheelItem(arr[i],arr[i]));
         }
         return list;
     }
@@ -33,10 +33,10 @@ public class WheelItem {
      * @param maxNum 最大值
      * @return
      */
-    public static List<WheelItem> listFromNum(int minNum,int maxNum){
-        List<WheelItem> list = new ArrayList<>();
+    public static List<ZJWheelItem> listFromNum(int minNum, int maxNum){
+        List<ZJWheelItem> list = new ArrayList<>();
         for (int i = minNum; i <= maxNum; i++) {
-            list.add(new WheelItem(""+i,""+i));
+            list.add(new ZJWheelItem(""+i,""+i));
         }
         return list;
     }

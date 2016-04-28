@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import cn.psvmc.wheelview.WheelItem;
-import cn.psvmc.wheelview.WheelView;
+import cn.psvmc.wheelview.ZJWheelItem;
+import cn.psvmc.wheelview.ZJWheelView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private String TAG = "MainActivity";
@@ -27,12 +27,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.main_show_dialog_btn2).setOnClickListener(this);
 
 
-        WheelView wva = (WheelView) findViewById(R.id.main_wv);
-        wva.setOffset(1);
-        wva.setItemsNew(WheelItem.listFromStringArray(Months));
-        wva.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+        ZJWheelView wva = (ZJWheelView) findViewById(R.id.main_wv);
+        wva.setItemsNew(ZJWheelItem.listFromStringArray(Months));
+        wva.setSelectIndex(2, false);
+        wva.setOnWheelViewListener(new ZJWheelView.OnWheelViewListener() {
             @Override
-            public void onSelected(int selectedIndex, WheelItem item) {
+            public void onSelected(int selectedIndex, ZJWheelItem item) {
                 Log.d(TAG, "索引: " + selectedIndex + ", 值: " + item.text);
             }
         });
@@ -43,26 +43,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (v.getId() == R.id.main_show_dialog_btn) {
             View outerView = LayoutInflater.from(this).inflate(R.layout.wheel_view, null);
-            WheelView wv = (WheelView) outerView.findViewById(R.id.wheel_view_wv);
+            ZJWheelView wv = (ZJWheelView) outerView.findViewById(R.id.wheel_view_wv);
             wv.setOffset(2);
-            wv.setItemsNew(WheelItem.listFromStringArray(Months));
+            wv.setItemsNew(ZJWheelItem.listFromStringArray(Months));
             wv.setSelectIndex(3, false);
-            wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+            wv.setOnWheelViewListener(new ZJWheelView.OnWheelViewListener() {
                 @Override
-                public void onSelected(int selectedIndex, WheelItem item) {
+                public void onSelected(int selectedIndex, ZJWheelItem item) {
                     Log.d(TAG, "月份: " + item.text + ", 索引: " + selectedIndex);
                 }
             });
 
-            WheelView wv2 = (WheelView) outerView.findViewById(R.id.wheel_view_wv2);
+            ZJWheelView wv2 = (ZJWheelView) outerView.findViewById(R.id.wheel_view_wv2);
             wv2.setOffset(2);
-            List<WheelItem> sexList = new ArrayList<>();
-            sexList.add(new WheelItem("0", "女"));
-            sexList.add(new WheelItem("1", "男"));
+            List<ZJWheelItem> sexList = new ArrayList<>();
+            sexList.add(new ZJWheelItem("0", "女"));
+            sexList.add(new ZJWheelItem("1", "男"));
             wv2.setItemsNew(sexList);
-            wv2.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+            wv2.setOnWheelViewListener(new ZJWheelView.OnWheelViewListener() {
                 @Override
-                public void onSelected(int selectedIndex, WheelItem item) {
+                public void onSelected(int selectedIndex, ZJWheelItem item) {
                     Log.d(TAG, "性别: " + item.text + ", 对应的值: " + item.value);
                 }
             });
@@ -75,51 +75,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         } else if (v.getId() == R.id.main_show_dialog_btn2) {
             View outerView = LayoutInflater.from(this).inflate(R.layout.wheel_view2, null);
-            final WheelView yearView, monthView, dayView;
-            final WheelView hourView, minuteView;
+            final ZJWheelView yearView, monthView, dayView;
+            final ZJWheelView hourView, minuteView;
 
-            yearView = (WheelView) outerView.findViewById(R.id.wheel_view_year);
-            monthView = (WheelView) outerView.findViewById(R.id.wheel_view_month);
-            dayView = (WheelView) outerView.findViewById(R.id.wheel_view_day);
-            hourView = (WheelView) outerView.findViewById(R.id.wheel_view_hour);
-            minuteView = (WheelView) outerView.findViewById(R.id.wheel_view_minute);
+            yearView = (ZJWheelView) outerView.findViewById(R.id.wheel_view_year);
+            monthView = (ZJWheelView) outerView.findViewById(R.id.wheel_view_month);
+            dayView = (ZJWheelView) outerView.findViewById(R.id.wheel_view_day);
+            hourView = (ZJWheelView) outerView.findViewById(R.id.wheel_view_hour);
+            minuteView = (ZJWheelView) outerView.findViewById(R.id.wheel_view_minute);
 
             yearView.setOffset(2);
-            yearView.setItemsNew(WheelItem.listFromNum(2000, 2100));
+            yearView.setItemsNew(ZJWheelItem.listFromNum(2000, 2100));
             yearView.setSelectIndex(0, false);
-            yearView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+            yearView.setOnWheelViewListener(new ZJWheelView.OnWheelViewListener() {
                 @Override
-                public void onSelected(int selectedIndex, WheelItem item) {
+                public void onSelected(int selectedIndex, ZJWheelItem item) {
                     jiaozhengDate(yearView, monthView, dayView);
                 }
             });
 
 
             monthView.setOffset(2);
-            monthView.setItemsNew(WheelItem.listFromNum(1, 12));
+            monthView.setItemsNew(ZJWheelItem.listFromNum(1, 12));
             monthView.setSelectIndex(0, false);
-            monthView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+            monthView.setOnWheelViewListener(new ZJWheelView.OnWheelViewListener() {
                 @Override
-                public void onSelected(int selectedIndex, WheelItem item) {
+                public void onSelected(int selectedIndex, ZJWheelItem item) {
                     jiaozhengDate(yearView, monthView, dayView);
                 }
             });
 
 
             dayView.setOffset(2);
-            dayView.setItemsNew(WheelItem.listFromNum(1, 31));
-            dayView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+            dayView.setItemsNew(ZJWheelItem.listFromNum(1, 31));
+            dayView.setOnWheelViewListener(new ZJWheelView.OnWheelViewListener() {
                 @Override
-                public void onSelected(int selectedIndex, WheelItem item) {
+                public void onSelected(int selectedIndex, ZJWheelItem item) {
                     jiaozhengDate(yearView, monthView, dayView);
                 }
             });
 
             hourView.setOffset(2);
-            hourView.setItemsNew(WheelItem.listFromNum(0, 23));
+            hourView.setItemsNew(ZJWheelItem.listFromNum(0, 23));
 
             minuteView.setOffset(2);
-            minuteView.setItemsNew(WheelItem.listFromNum(0, 59));
+            minuteView.setItemsNew(ZJWheelItem.listFromNum(0, 59));
 
             new AlertDialog.Builder(this)
                     .setTitle("日期选择")
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void jiaozhengDate(WheelView yearView, WheelView monthView, WheelView dayView) {
+    private void jiaozhengDate(ZJWheelView yearView, ZJWheelView monthView, ZJWheelView dayView) {
         try {
             Log.i(TAG, "yearView.getSeletedItem().value "+yearView.getSeletedItem().value);
             Log.i(TAG, "monthView.getSeletedItem().value "+monthView.getSeletedItem().value);
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (month == 2) {
                 if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
                     if (maxDay != 29) {
-                        dayView.setItemsNew(WheelItem.listFromNum(1, 29));
+                        dayView.setItemsNew(ZJWheelItem.listFromNum(1, 29));
                         if (day > 29) {
                             dayView.setSelectValue("29", false);
                         }
@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 } else {
                     if (maxDay != 28) {
-                        dayView.setItemsNew(WheelItem.listFromNum(1, 28));
+                        dayView.setItemsNew(ZJWheelItem.listFromNum(1, 28));
                         if (day > 28) {
                             dayView.setSelectValue("28", false);
                         }
@@ -161,14 +161,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             } else if (Arrays.asList(months_big).contains(""+month)) {
                 if (maxDay != 31) {
-                    dayView.setItemsNew(WheelItem.listFromNum(1, 31));
+                    dayView.setItemsNew(ZJWheelItem.listFromNum(1, 31));
                     if (day > 31) {
                         dayView.setSelectValue("31", false);
                     }
                 }
             } else {
                 if (maxDay != 30) {
-                    dayView.setItemsNew(WheelItem.listFromNum(1, 30));
+                    dayView.setItemsNew(ZJWheelItem.listFromNum(1, 30));
                     if (day > 30) {
                         dayView.setSelectValue("30", false);
                     }

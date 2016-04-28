@@ -6,11 +6,11 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
- <cn.psvmc.wheelview.WheelView
+ <cn.psvmc.wheelview.ZJWheelView
      android:id="@+id/main_wv"
      android:layout_width="match_parent"
      android:layout_height="wrap_content">
- </cn.psvmc.wheelview.WheelView>
+ </cn.psvmc.wheelview.ZJWheelView>
 
     <Button
         android:id="@+id/main_show_dialog_btn"

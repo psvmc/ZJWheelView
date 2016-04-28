@@ -1,5 +1,4 @@
 package cn.psvmc.wheelview;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -23,13 +22,22 @@ import java.util.List;
 /**
  * Created by PSVMC on 16/4/27.
  */
-public class WheelView extends ScrollView {
+public class ZJWheelView extends ScrollView {
 
-    List<WheelItem> itemsOriginal;
-    List<WheelItem> itemsNew;
+    List<ZJWheelItem> itemsOriginal;
+    List<ZJWheelItem> itemsNew;
+
+
+    int offset = 2; // 偏移量（需要在最前面和最后面补全）
+
+    int selectedIndex = offset;//选中的项的索引
+
+    private int displayItemCount = offset * 2 + 1; // 每页显示的数量
+
+    int itemHeight = 0;//行高
 
     public static class OnWheelViewListener {
-        public void onSelected(int selectedIndex, WheelItem item) {
+        public void onSelected(int selectedIndex, ZJWheelItem item) {
         }
     }
 
@@ -38,31 +46,31 @@ public class WheelView extends ScrollView {
 
     private LinearLayout views;
 
-    public WheelView(Context context) {
+    public ZJWheelView(Context context) {
         super(context);
         init(context);
     }
 
-    public WheelView(Context context, AttributeSet attrs) {
+    public ZJWheelView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public WheelView(Context context, AttributeSet attrs, int defStyle) {
+    public ZJWheelView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
     }
 
 
-    public List<WheelItem> getItemsOriginal() {
+    public List<ZJWheelItem> getItemsOriginal() {
         return itemsOriginal;
     }
 
-    public List<WheelItem> getItemsNew() {
+    public List<ZJWheelItem> getItemsNew() {
         return itemsNew;
     }
 
-    public void setItemsNew(List<WheelItem> list) {
+    public void setItemsNew(List<ZJWheelItem> list) {
         if (null == itemsNew) {
             itemsOriginal = new ArrayList<>();
             itemsNew = new ArrayList<>();
@@ -76,16 +84,12 @@ public class WheelView extends ScrollView {
 
         // 前面和后面补全
         for (int i = 0; i < offset; i++) {
-            itemsNew.add(0, new WheelItem("", ""));
-            itemsNew.add(new WheelItem("", ""));
+            itemsNew.add(0, new ZJWheelItem("", ""));
+            itemsNew.add(new ZJWheelItem("", ""));
         }
 
         initData();
     }
-
-
-    public static final int OFF_SET_DEFAULT = 1;
-    int offset = OFF_SET_DEFAULT; // 偏移量（需要在最前面和最后面补全）
 
     public int getOffset() {
         return offset;
@@ -94,11 +98,6 @@ public class WheelView extends ScrollView {
     public void setOffset(int offset) {
         this.offset = offset;
     }
-
-    private int displayItemCount; // 每页显示的数量
-
-    int selectedIndex = 1;
-
 
     private void init(Context context) {
         this.context = context;
@@ -121,32 +120,30 @@ public class WheelView extends ScrollView {
                         onSeletedCallBack();
                     } else {
                         if (remainder > itemHeight / 2) {
-                            WheelView.this.post(new Runnable() {
+                            ZJWheelView.this.post(new Runnable() {
                                 @Override
                                 public void run() {
                                     selectedIndex = divided + offset + 1;
                                     onSeletedCallBack();
-                                    WheelView.this.smoothScrollTo(0, initialY - remainder + itemHeight);
+                                    ZJWheelView.this.smoothScrollTo(0, initialY - remainder + itemHeight);
                                 }
                             });
                         } else {
-                            WheelView.this.post(new Runnable() {
+                            ZJWheelView.this.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    WheelView.this.smoothScrollTo(0, initialY - remainder);
+                                    ZJWheelView.this.smoothScrollTo(0, initialY - remainder);
                                     selectedIndex = divided + offset;
                                     onSeletedCallBack();
                                 }
                             });
                         }
 
-
                     }
-
 
                 } else {
                     initialY = getScrollY();
-                    WheelView.this.postDelayed(scrollerTask, newCheck);
+                    ZJWheelView.this.postDelayed(scrollerTask, newCheck);
                 }
             }
         };
@@ -166,12 +163,19 @@ public class WheelView extends ScrollView {
     private void initData() {
         displayItemCount = offset * 2 + 1;
         views.removeAllViews();
-        for (WheelItem item : itemsNew) {
+        for (ZJWheelItem item : itemsNew) {
             views.addView(createView(item.text));
         }
+
+        //第一次初始化
+        if (selectedIndex <= offset) {
+            selectedIndex = offset;
+        } else if (selectedIndex > (itemsNew.size() - offset - 1)) {
+            selectedIndex = itemsNew.size() - offset - 1;
+        }
+        refreshTextColor();
     }
 
-    int itemHeight = 0;
 
     private TextView createView(String item) {
         TextView tv = new TextView(context);
@@ -207,7 +211,7 @@ public class WheelView extends ScrollView {
     }
 
     private void refreshItemView(int y) {
-        if(y>itemHeight* itemsNew.size()){
+        if (y > itemHeight * itemsNew.size()) {
             return;
         }
         int position = y / itemHeight + offset;
@@ -271,7 +275,7 @@ public class WheelView extends ScrollView {
         if (null == paint) {
             paint = new Paint();
             paint.setColor(Color.parseColor("#83cde6"));
-            paint.setStrokeWidth(dip2px(1f));
+            paint.setStrokeWidth(dip2px(1.5f));
         }
 
         background = new Drawable() {
@@ -314,7 +318,7 @@ public class WheelView extends ScrollView {
      */
     private void onSeletedCallBack() {
         if (null != onWheelViewListener) {
-            onWheelViewListener.onSelected(selectedIndex, itemsNew.get(selectedIndex));
+            onWheelViewListener.onSelected(selectedIndex-offset, itemsNew.get(selectedIndex));
         }
         refreshTextColor();
     }
@@ -322,7 +326,7 @@ public class WheelView extends ScrollView {
     /**
      * 刷新选中项的颜色
      */
-    private void refreshTextColor(){
+    private void refreshTextColor() {
         int childSize = views.getChildCount();
         for (int i = 0; i < childSize; i++) {
             TextView itemView = (TextView) views.getChildAt(i);
@@ -339,59 +343,75 @@ public class WheelView extends ScrollView {
 
     /**
      * 设置选中项的索引
+     *
      * @param position
      * @param animation
      */
-    public void setSelectIndex(int position, boolean animation) {
+    private void setSelectIndexFromNewList(int position, boolean animation) {
         final int p = position;
-
-
         final boolean anim = animation;
-        selectedIndex = p + offset;
+        if (selectedIndex != p) {
+            selectedIndex = p;
 
-        this.post(new Runnable() {
-            @Override
-            public void run() {
-                if (anim) {
-                    WheelView.this.smoothScrollTo(0, p * itemHeight);
-                } else {
-                    WheelView.this.scrollTo(0, p * itemHeight);
+            this.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (anim) {
+                        ZJWheelView.this.smoothScrollTo(0, (p - offset) * itemHeight);
+                    } else {
+                        ZJWheelView.this.scrollTo(0, (p - offset) * itemHeight);
+                    }
                 }
-            }
-        });
+            });
+        }
+
         refreshTextColor();
     }
 
     /**
+     * 设置选中项的索引
+     *
+     * @param position
+     * @param animation
+     */
+    public void setSelectIndex(int position, boolean animation) {
+        position += offset;
+        setSelectIndexFromNewList(position,animation);
+
+    }
+
+    /**
      * 设置选中的值
+     *
      * @param value
      * @param animation
      */
     public void setSelectValue(String value, boolean animation) {
         int position = getIndexFromValue(value);
-        if(position == -1){
+        if (position == -1) {
             return;
         }
-        setSelectIndex(position,animation);
+        setSelectIndexFromNewList(position, animation);
     }
 
     /**
      * 设置选中的文本
+     *
      * @param text
      * @param animation
      */
     public void setSelectText(String text, boolean animation) {
         int position = getIndexFromText(text);
-        if(position == -1){
+        if (position == -1) {
             return;
         }
-        setSelectIndex(position, animation);
+        setSelectIndexFromNewList(position, animation);
     }
 
-    private int getIndexFromText(String text){
-        if(this.itemsNew !=null){
+    private int getIndexFromText(String text) {
+        if (this.itemsNew != null) {
             for (int i = 0; i < this.itemsNew.size(); i++) {
-                if(this.itemsNew.get(i).text.equals(text)){
+                if (this.itemsNew.get(i).text.equals(text)) {
                     return i;
                 }
             }
@@ -400,10 +420,10 @@ public class WheelView extends ScrollView {
         return -1;
     }
 
-    private int getIndexFromValue(String value){
-        if(this.itemsNew !=null){
+    private int getIndexFromValue(String value) {
+        if (this.itemsNew != null) {
             for (int i = 0; i < this.itemsNew.size(); i++) {
-                if(this.itemsNew.get(i).value.equals(value)){
+                if (this.itemsNew.get(i).value.equals(value)) {
                     return i;
                 }
             }
@@ -413,7 +433,12 @@ public class WheelView extends ScrollView {
     }
 
 
-    public WheelItem getSeletedItem() {
+    public ZJWheelItem getSeletedItem() {
+        if (selectedIndex <= offset) {
+            selectedIndex = offset;
+        } else if (selectedIndex > (itemsNew.size() - offset - 1)) {
+            selectedIndex = itemsNew.size() - offset - 1;
+        }
         return itemsNew.get(selectedIndex);
     }
 
@@ -451,8 +476,8 @@ public class WheelView extends ScrollView {
     }
 
     private int getViewMeasuredHeight(View view) {
-        int width = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        int expandSpec = View.MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, View.MeasureSpec.AT_MOST);
+        int width = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
         view.measure(width, expandSpec);
         return view.getMeasuredHeight();
     }

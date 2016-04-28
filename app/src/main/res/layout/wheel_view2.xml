@@ -1,41 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+              android:layout_height="fill_parent"
+              android:orientation="horizontal">
 
-    <cn.psvmc.wheelview.WheelView
+    <cn.psvmc.wheelview.ZJWheelView
         android:id="@+id/wheel_view_year"
-        android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         />
-    <cn.psvmc.wheelview.WheelView
+
+    <cn.psvmc.wheelview.ZJWheelView
         android:id="@+id/wheel_view_month"
-        android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-    />
+        android:layout_weight="1"
+        />
 
-    <cn.psvmc.wheelview.WheelView
+    <cn.psvmc.wheelview.ZJWheelView
         android:id="@+id/wheel_view_day"
         android:layout_width="wrap_content"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         />
 
-    <cn.psvmc.wheelview.WheelView
+    <cn.psvmc.wheelview.ZJWheelView
         android:id="@+id/wheel_view_hour"
         android:layout_width="wrap_content"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         />
 
-    <cn.psvmc.wheelview.WheelView
+    <TextView
+        android:layout_width="5dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text=":"
+        android:textSize="20sp"
+        />
+
+    <cn.psvmc.wheelview.ZJWheelView
         android:id="@+id/wheel_view_minute"
         android:layout_width="wrap_content"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         />
 
 
